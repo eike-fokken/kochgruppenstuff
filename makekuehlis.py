@@ -55,22 +55,46 @@ for packstreet in list_of_lists:
     for page_number in range(int(len(packstreet) / 8)):
         file.write("\\begin{table}[p]\n  \\begin{tabular}{ll}")
         for i in range(4):
-            file.write(
-                "\\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n\\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n      \\phantom{ }"
-            )
-            file.write(str(packstreet_number))
-            file.write("\\newline ")
-            file.write("\\maxsizebox{8cm}{!}{")
-            file.write(packstreet.pop(0))
-            file.write("}")
-            file.write(
-                "    \\end{minipage}}\n    &\n\\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n \\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n        \\phantom{ }\n"
-            )
-            file.write(str(packstreet_number))
-            file.write("\\newline ")
-            file.write("\\maxsizebox{8cm}{!}{")
-            file.write(packstreet.pop(0))
-            file.write("}")
-            file.write("\n\end{minipage}}\\\\")
+            if packstreet[0] != " ":
+                file.write(
+                    "\\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n\\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n      \\phantom{ }"
+                )
+                file.write(str(packstreet_number))
+                file.write("\\newline ")
+                file.write("\\maxsizebox{8cm}{!}{")
+                file.write(packstreet.pop(0))
+                file.write("}")
+                file.write("    \\end{minipage}}\n    &\n")
+            else:
+                file.write(
+                    "\\mbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n \\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n        \\phantom{ }\n"
+                )
+                file.write(" ")
+                file.write("\\newline ")
+                file.write("\\maxsizebox{8cm}{!}{")
+                file.write(packstreet.pop(0))
+                file.write("}")
+                file.write("\n\\end{minipage}}\\\\")
+            if packstreet[0] != " ":
+                file.write(
+                    "\\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n \\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n        \\phantom{ }\n"
+                )
+                file.write(str(packstreet_number))
+                file.write("\\newline ")
+                file.write("\\maxsizebox{8cm}{!}{")
+                file.write(packstreet.pop(0))
+                file.write("}")
+                file.write("\n\\end{minipage}}\\\\")
+            else:
+                file.write(
+                    "\\mbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n \\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n        \\phantom{ }\n"
+                )
+                file.write(" ")
+                file.write("\\newline ")
+                file.write("\\maxsizebox{8cm}{!}{")
+                file.write(packstreet.pop(0))
+                file.write("}")
+                file.write("\n\\end{minipage}}\\\\")
+
         file.write("\\end{tabular}\n\\end{table}\n\n\n")
 file.write("\\end{document}")
