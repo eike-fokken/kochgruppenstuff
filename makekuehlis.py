@@ -10,7 +10,7 @@ def get_kg_lists(frame: pd.DataFrame):
         cleaned_list = [x for x in list1 if type(x) == str]
         current_length = len(cleaned_list)
         fillup = (8 - current_length % 8) % 8
-        print(fillup)
+        # print(fillup)
         for counter in range(fillup):
             cleaned_list.append(" ")
         all_lists.append(cleaned_list)
@@ -20,11 +20,13 @@ def get_kg_lists(frame: pd.DataFrame):
 frame = pd.read_excel("kochgruppennamen.xlsx")
 
 list_of_lists = get_kg_lists(frame)
-for list in list_of_lists:
-    print(f"list of length {len(list)}")
-    print("\n".join(list))
-    print("end")
-sys.exit()
+# for current_list in list_of_lists:
+#     print(f"list of length {len(current_list)}")
+#     print("\n".join(current_list))
+#     print("end")
+# sys.exit()
+
+
 # def file_to_list(file):
 #     with open(file, "r") as file_object:
 #         my_variable = file_object.read().splitlines()
@@ -40,30 +42,35 @@ sys.exit()
 
 # kochgruppen = [kochgruppen1, kochgruppen2, kochgruppen3, kochgruppen4]
 
-# file = open("superliste.tex", "w")
-# file.write(
-#     "\\documentclass{article}\\usepackage[ngerman]{babel}\\usepackage{geometry}\\usepackage{lmodern}\n\\usepackage[T1]{fontenc}\n\\usepackage[utf8]{inputenc}\n\\pagestyle{empty}\n\\begin{document}\n"
-# )
+# kochgruppen = [kochgruppen1, kochgruppen2, kochgruppen3, kochgruppen4]
 
+file = open("kuehlkistenkarten.tex", "w")
+file.write(
+    "\\documentclass[a4paper]{article}\n\\usepackage[ngerman]{babel}\n\\usepackage[textwidth=17cm,textheight=25cm]{geometry}\n\\usepackage{lmodern}\n\\usepackage[T1]{fontenc}\n\\usepackage[utf8]{inputenc}\n\\usepackage{adjustbox}\n\\pagestyle{empty}\n\\begin{document}\n\centering\n"
+)
 
-for packstreet_number in range(4):
-    for j in range(4):
-        if packstreet_number == 3 and j == 3:
-            continue
+packstreet_number = 0
+for packstreet in list_of_lists:
+    packstreet_number += 1
+    for page_number in range(int(len(packstreet) / 8)):
         file.write("\\begin{table}[p]\n  \\begin{tabular}{ll}")
-        for i in range(3):
+        for i in range(4):
             file.write(
-                "    \\hspace{-2em}    \\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n        \\fontsize{45}{54} \\selectfont\n        \\phantom{ }\\\\\n      \\phantom{ }"
+                "\\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n\\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n      \\phantom{ }"
             )
-            file.write(str(packstreet_number + 1))
-            file.write(" ")
-            file.write(kochgruppen[packstreet_number][6 * j + 2 * i])
+            file.write(str(packstreet_number))
+            file.write("\\newline ")
+            file.write("\\maxsizebox{8cm}{!}{")
+            file.write(packstreet.pop(0))
+            file.write("}")
             file.write(
-                "    \\end{minipage}}\n    &\n\\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n        \\fontsize{45}{54} \\selectfont\n        \\phantom{ }\\\\\n        \\phantom{ } "
+                "    \\end{minipage}}\n    &\n\\fbox{\\begin{minipage}[t][6cm][t]{8cm}\n\\centering\n \\fontsize{40}{48} \\selectfont\n        \\phantom{ }\\\\\n        \\phantom{ }\n"
             )
-            file.write(str(packstreet_number + 1))
-            file.write(" ")
-            file.write(kochgruppen[packstreet_number][6 * j + 2 * i + 1])
-            file.write("      \end{minipage}}\\\\")
+            file.write(str(packstreet_number))
+            file.write("\\newline ")
+            file.write("\\maxsizebox{8cm}{!}{")
+            file.write(packstreet.pop(0))
+            file.write("}")
+            file.write("\n\end{minipage}}\\\\")
         file.write("\\end{tabular}\n\\end{table}\n\n\n")
 file.write("\\end{document}")
